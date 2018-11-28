@@ -29,6 +29,18 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
+    ENV['ember-google-maps'] = {
+      key: 'AIzaSyCGX2iOax-M1s_D8osYXbtqje7NH0uP3zE', // Using .env files in this example
+      language: 'en',
+      region: 'GB',
+      protocol: 'https',
+      version: '3.36',
+      libraries: ['geometry', 'places']
+      // client: undefined,
+      // channel: undefined,
+      // baseUrl: '//maps.googleapis.com/maps/api/js'
+
+    }
   }
 
   if (environment === 'test') {
@@ -41,10 +53,22 @@ module.exports = function(environment) {
 
     ENV.APP.rootElement = '#ember-testing';
     ENV.APP.autoboot = false;
+
   }
 
   if (environment === 'production') {
     // here you can enable a production-specific feature
+    ENV['ember-google-maps'] = {
+      key: 'AIzaSyCGX2iOax-M1s_D8osYXbtqje7NH0uP3zE', // Using .env files in this example
+      language: 'en',
+      region: 'GB',
+      protocol: 'https',
+      version: '3.36',
+      libraries: ['geometry', 'places']
+      // client: undefined,
+      // channel: undefined,
+      // baseUrl: '//maps.googleapis.com/maps/api/js'
+    }
   }
 
   return ENV;

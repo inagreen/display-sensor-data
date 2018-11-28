@@ -1,0 +1,116 @@
+<div class="row">
+  <div class="col-sm-6">
+    <div class="row container">
+      <div class="col-sm-4" style="display: inline-block">
+        {{#bs-form formLayout=formLayout model=this onSubmit=(action "getSensorValue") as |form|}}
+          {{#form.element class="strong" type="date" label="Date" placeholder="Date" property="date" as |el|}}
+            <div class="input-group" type="date">
+              {{pikaday-input
+                value=inputDate
+                format="MM/DD/YYYY"
+                placeholder="MM/DD/YYYY"
+                onSelection=(action 'setDate')
+              }}
+            </div>
+          {{/form.element}}
+          {{#form.element class="strong" label="Hour" placeholder="Put in hour between 0-23" property="hour" as |el|}}
+            <div class="input-group">
+              {{input
+                value=inputHour
+                placeholder="Accepted range: 1-23"
+                key-up=(action "setHour")
+              }}
+            </div>
+          {{/form.element}}
+          {{#form.element class="strong" label="Minute" placeholder="Put in minutes betwee 0-59" property="minute" as |el|}}
+            <div class="input-group">
+              {{input
+                value=inputMinute
+                placeholder="Accepted range: 1-59"
+                key-up=(action "setMinute")
+              }}
+            </div>
+          {{/form.element}}
+          {{bs-button defaultText="Submit" type="primary" buttonType="submit"}}
+        {{/bs-form}}
+      </div>
+      <div class="col-sm-8">
+        <div id="card-container">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Hour</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Slide to change hour</h6>
+                {{range-slider
+                  class="slider"
+                  start=hourVal
+                  range=hourRange
+                  pips=hourPips
+                  step=step
+                  tooltips=tooltips
+                  value=hourVal
+                  on-change="changedHour"
+                }}
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Minute</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Slide to change minute</h6>
+                {{range-slider
+                  class="slider"
+                  start=minuteVal
+                  range=minuteRange
+                  pips=minutePips
+                  step=step
+                  tooltips=tooltips
+                  value=minuteVal
+                  on-change="changedMinute"
+                }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="card-container">
+        <div class="row container">
+          {{#each locations as |l|}}
+            <div class="col-sm-4">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Sensor {{l.sensor}}</h5>
+                  <p class="card-text"><strong>Value:</strong> {{l.sensorValue}}</p>
+                  <p class="card-text"><strong>Coordinates:</strong> {{l.lat}}, {{l.lng}}</p>
+                  <p class="card-text"><strong>Date:</strong> {{#if l.date}}{{l.date}}{{else}}<span style="color: red">Please set a valid date.</span>{{/if}}</p>
+                  <p class="card-text"><strong>Time:</strong> {{#if l.time}}{{l.time}}{{else}}<span style="color: red">Please set a valid time.</span>{{/if}}</p>
+                </div>
+              </div>
+            </div>
+          {{/each}}
+        </div>
+      </div>
+  </div>
+  <div class="col-sm-6">
+    {{#g-map lat=centreLat lng=centreLng zoom=13 as |g|}}
+      {{#each locations as |l|}}
+        {{#g.marker lat=l.lat lng=l.lng as |m|}}
+          {{#if l.sensorValue}}
+            {{#m.infoWindow  isOpen=showInfoWindow as |i|}}
+              <div class="text-center">
+                <p>Sensor Value: {{l.sensorValue}}</p>
+              </div>
+            {{/m.infoWindow}}
+          {{/if}}
+        {{/g.marker}}
+        {{g.circle
+          lat=l.lat
+          lng=l.lng
+          radius=500
+          fillColor="green"
+          fillOpacity=0.3
+          strokeColor="darkgreen"
+          strokeOpacity=0.1
+          strokeWeight=1}}
+      {{/each}}
+    {{/g-map}}
+  </div>
+</div>

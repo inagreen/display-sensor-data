@@ -1,5 +1,35 @@
-{{!-- The following component displays Ember's default welcome message. --}}
-{{welcome-page}}
-{{!-- Feel free to remove this! --}}
-
-{{outlet}}
+<header>
+  <div class="collapse bg-dark" id="navbarHeader">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 col-md-7 py-4">
+          <h4 class="text-white">About</h4>
+          <p class="text-white">This is a mini project to showcase the data captured within a set timeframe and intervals for sensors installed within various locations. The app also displays individual sensor locations, along with sensor reading at 1 minute intervals. Sensor data is specified and obtained from a JSON file.</p>
+          <p class="text-white">You can find and search all sensors status and information on this web app. Input date and time to find specific sensor values, or use the slider for easy update on hour and minute.</p>
+        </div>
+        <div class="col-sm-4 offset-md-1 py-4">
+          <h4 class="text-white">Contact</h4>
+          <ul class="list-unstyled">
+            <li><a href="mailto: zhafarina@icloud.com" class="text-white">Email me</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="navbar navbar-dark bg-dark box-shadow">
+    <div class="container d-flex justify-content-between">
+      <span class="navbar-brand d-flex align-items-center">
+        <strong>Stability Inc</strong>
+      </span>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation" {{action 'toggleNav'}}>
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </div>
+</header>
+<body>
+  <div class="jumbotron">
+      <img class="center-block" id="logo" src="/assets/technicalTaskLogo.svg" alt="Stability-Inc Logo">
+  </div>
+  {{outlet}}
+</body>
